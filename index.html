@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panadería</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Chart.js CDN para gráficos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <main class="container">
+        <h1>Panel de Administración</h1>
+        <section class="resumen">
+            <div>
+                <h2>Ventas del día</h2>
+                <p id="ventas-dia">S/ 0.00</p>
+            </div>
+            <div>
+                <h2>Gastos del día</h2>
+                <p id="gastos-dia">S/ 0.00</p>
+            </div>
+            <div>
+                <h2>Ganancia del día</h2>
+                <p id="ganancia-dia">S/ 0.00</p>
+            </div>
+        </section>
+
+        <section class="formularios">
+            <div>
+    <h3>Registrar Venta de Día Anterior</h3>
+    <form id="form-venta-anterior">
+        <input type="number" step="0.01" min="0" placeholder="Monto de venta (S/)" required id="venta-anterior-monto">
+        <select id="venta-anterior-turno" required>
+            <option value="">Turno</option>
+            <option value="Mañana">Mañana</option>
+            <option value="Noche">Noche</option>
+        </select>
+        <input type="date" required id="venta-anterior-fecha" max="">
+        <button type="submit">Agregar Venta Anterior</button>
+    </form>
+</div>
+            <div>
+                <h3>Registrar Venta</h3>
+                <form id="form-venta">
+                    <input type="number" step="0.01" min="0" placeholder="Monto de venta (S/)" required id="venta-monto">
+                    <select id="venta-turno" required>
+                        <option value="">Turno</option>
+                        <option value="Mañana">Mañana</option>
+                        <option value="Noche">Noche</option>
+                    </select>
+                    <button type="submit">Agregar Venta</button>
+                </form>
+            </div>
+            <div>
+                <h3>Registrar Gasto</h3>
+                <form id="form-gasto">
+                 <input type="number" step="0.01" min="0" placeholder="Monto de gasto (S/)" required id="gasto-monto">
+        <select id="gasto-tipo" required>
+            <option value="">Tipo de gasto</option>
+            <option value="Materia Prima">Materia Prima</option>
+        </select>
+        <!-- Turno fijo a mañana, oculto para el usuario -->
+        <input type="hidden" id="gasto-turno" value="Mañana">
+        <input type="text" placeholder="Descripción (ej: harina, queso, huevo...)" id="gasto-desc">
+        <button type="submit">Agregar Gasto</button>
+                </form>
+            </div>
+        </section>
+
+        <section class="historial">
+            <div>
+                <h3>Historial de Ventas</h3>
+                <ul id="lista-ventas"></ul>
+            </div>
+            <div>
+                <h3>Historial de Gastos</h3>
+                <ul id="lista-gastos"></ul>
+            </div>
+        </section>
+
+        <section class="reportes">
+            <h2>Reportes</h2>
+            <div>
+                <canvas id="grafico-ventas"></canvas>
+            </div>
+            <div>
+                <canvas id="grafico-ganancias"></canvas>
+            </div>
+            <div>
+                <h3>Resumen Mensual</h3>
+                <button id="descargar-pdf">Descargar reporte mensual en PDF</button>
+                <table id="tabla-mensual">
+                    <thead>
+                        <tr>
+                            <th>Mes</th>
+                            <th>Total Ventas</th>
+                            <th>Total Gastos</th>
+                            <th>Ganancia Neta</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Se llena con JS -->
+                    </tbody>
+                </table>
+            </div>
+            <div>
+                <h3>Comparativa de Meses</h3>
+                <canvas id="grafico-comparativa"></canvas>
+            </div>
+            <div>
+                <h3>Gastos Fijos Mensuales</h3>
+                <form id="form-fijos">
+                    <input type="number" step="0.01" min="0" placeholder="Alquiler (S/)" id="fijo-alquiler">
+                    <input type="number" step="0.01" min="0" placeholder="Luz (S/)" id="fijo-luz">
+                    <input type="number" step="0.01" min="0" placeholder="Agua (S/)" id="fijo-agua">
+                    <input type="number" step="0.01" min="0" placeholder="Gas (S/)" id="fijo-gas">
+                    <input type="number" step="0.01" min="0" placeholder="Personal (S/)" id="fijo-personal">
+                    <button type="submit">Guardar Gastos Fijos</button>
+                </form>
+            </div>
+        </section>
+    </main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
