@@ -315,3 +315,12 @@ document.getElementById('form-venta-anterior').addEventListener('submit', functi
     actualizarReportes();
     alert('¡Venta anterior registrada!');
 });
+// Mostrar/ocultar la sección de venta anterior
+document.getElementById('toggle-venta-anterior').addEventListener('click', function() {
+    const seccion = document.getElementById('seccion-venta-anterior');
+    if (seccion.style.display === 'none' || seccion.style.display === '') {
+        seccion.style.display = 'block';
+    } else {
+        seccion.style.display = 'none';
+    }
+});
