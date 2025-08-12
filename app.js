@@ -20,6 +20,15 @@ function getMonthName(dateStr) {
     const meses = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
     return `${meses[parseInt(month)-1]} ${year}`;
 }
+function formatearFechaAmigable(fechaISO) {
+    const fecha = new Date(fechaISO);
+    return fecha.toLocaleDateString('es-PE', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    });
+}
 
 // LocalStorage helpers
 function loadData() {
@@ -121,20 +130,34 @@ function actualizarResumen() {
     document.getElementById('ganancia-dia').textContent = `S/ ${gananciaHoy.toFixed(2)}`;
 }
 
-// Historial
+// Historial con formato amigable y badges
 function actualizarHistorial() {
     const listaVentas = document.getElementById('lista-ventas');
     listaVentas.innerHTML = '';
     ventas.slice().reverse().forEach((v) => {
         const li = document.createElement('li');
-        li.textContent = `${v.fecha} (${v.turno}) - S/ ${v.monto.toFixed(2)} [${v.hora}]`;
+        li.innerHTML = `
+            <span class="badge badge-venta">Venta</span>
+            <strong>${formatearFechaAmigable(v.fecha)}</strong>
+            <span>Turno: ${v.turno}</span>
+            <span>Monto: <b>S/ ${v.monto.toFixed(2)}</b></span>
+            <span style="font-size:0.9em;color:#888;">${v.hora ? `[${v.hora}]` : ''}</span>
+        `;
         listaVentas.appendChild(li);
     });
     const listaGastos = document.getElementById('lista-gastos');
     listaGastos.innerHTML = '';
     gastos.slice().reverse().forEach((g) => {
         const li = document.createElement('li');
-        li.textContent = `${g.fecha} (${g.turno}) - ${g.tipo}: S/ ${g.monto.toFixed(2)} [${g.hora}]${g.desc ? ` (${g.desc})` : ''}`;
+        li.innerHTML = `
+            <span class="badge badge-gasto">Gasto</span>
+            <strong>${formatearFechaAmigable(g.fecha)}</strong>
+            <span>Turno: ${g.turno}</span>
+            <span>Tipo: ${g.tipo}</span>
+            <span>Monto: <b>S/ ${g.monto.toFixed(2)}</b></span>
+            ${g.desc ? `<span>(${g.desc})</span>` : ''}
+            <span style="font-size:0.9em;color:#888;">${g.hora ? `[${g.hora}]` : ''}</span>
+        `;
         listaGastos.appendChild(li);
     });
 }
